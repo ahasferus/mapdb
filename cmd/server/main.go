@@ -24,7 +24,7 @@ func errorhandler(err error) {
 }
 
 func main() {
-	server := NewServer()
+	server := newServer()
 
 	err := ParseOptions(server)
 	if err != nil {
@@ -32,14 +32,14 @@ func main() {
 		return
 	}
 
-	defer server.Close()
+	defer server.close()
 
 	go func() {
 		signalHandler()
-		server.Close()
+		server.close()
 		os.Exit(0)
 	}()
 
-	errorhandler(server.Start())
+	errorhandler(server.start())
 	fmt.Println("exit")
 }
