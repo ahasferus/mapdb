@@ -93,6 +93,13 @@ func handleStorage(db *database, commands chan chan string) {
 				a := &args{command[1], ""}
 				db.del(a, &reply)
 				command_chan <- reply
+			case "keys":
+				if len(command) != 2 {
+					command_chan <- "Wrong format for command keys. Please use keys [regex]\n"
+					break
+				}
+				db.keys(command[1], &reply)
+				command_chan <- reply
 			default:
 				log.Println("Wrong command received")
 				command_chan <- "Supported commands are: set, get, del\n"
